@@ -21,7 +21,7 @@
         var: docker_pull_result
 
     - name: Remove existing calculator-new container (if exists)
-      command: docker rm -f calculator
+      command: docker rm -f calculator-new
       ignore_errors: yes
 
     - name: Running container
