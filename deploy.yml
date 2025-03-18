@@ -1,0 +1,28 @@
+---
+- name: Deploy Scientific Calculator
+  hosts: localhost
+  remote_user: gitika
+  become: false
+
+  tasks:
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+
+    - name: Pull Docker Image
+      docker_image:
+        name: "gitikapinjani19/scientific-calculator-new"
+        source: pull
+      register: docker_pull_result
+
+    - name: Display Docker Pull Result
+      debug:
+        var: docker_pull_result
+
+    - name: Remove existing calculator-new container (if exists)
+      command: docker rm -f calculator
+      ignore_errors: yes
+
+    - name: Running container
+      shell: docker run -it -d --name calculator-new gitikapinjani19/scientific-calculator-new
